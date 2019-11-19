@@ -31,6 +31,10 @@ export default {
   plugins: [
     '@/plugins/element-ui'
   ],
+
+  router: {
+    middleware: ['needLogin']
+  },
   proxy:{
     "/api" : {
       "target" : "http://313.shenzhenbenwo.com",

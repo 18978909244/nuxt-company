@@ -14,7 +14,7 @@
           {{detail.detail}}
         </div>
         <div class="button">
-          <el-button type="primary">立即购买</el-button>
+          <el-button type="primary" @click="buy">立即购买</el-button>
         </div>
       </div>
     </div>
@@ -42,6 +42,7 @@ export default {
   },
   computed: {
     ...mapState(["user_info"]),
+    ...mapGetters(['is_login']),
     selectedKind: function() {
       return this.kind_id
         ? this.detail.kind_list.find(item => item.kind_id === this.kind_id)
@@ -71,6 +72,12 @@ export default {
           });
         }
       });
+    },
+    buy(){
+      if(!this.is_login){
+        this.$router.push('/login?redirect='+this.$route.fullPath)
+      }
+      this.$router.push(`/createOrder?product_id=${this.detail.product_id}`)
     }
   }
 };

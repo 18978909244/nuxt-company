@@ -81,6 +81,23 @@ const store = () => new Vuex.Store({
     },
   },
   actions: {
+
+		async asyncAddOrder({
+			state,
+			commit,
+			dispatch,
+			rootState
+		}, postData) {
+			if (!state.user_info) return
+		
+			let {order_id} = await request('order_add', postData)
+			console.log('order_id',order_id)
+			await dispatch('initMyOrder')
+			return Promise.resolve(order_id)
+		},
+    async asyncGetOrderInput({},payLoad){
+      return await request('order_input',payLoad)
+    },
     async asyncFetchGood({
       commit
     },payLoad){
@@ -196,31 +213,15 @@ const store = () => new Vuex.Store({
       })
 
     },
-
-    async asyncAddOrder({
+    async asyncCancelOrder({
       state,
       commit,
       dispatch,
       rootState
-    }, postData) {
-      if (!rootState.user_info) return
-
-      let {
-        order_id
-      } = await request('order_add', postData)
-      console.log('order_id', order_id)
-      await dispatch('initMyOrder')
-      return Promise.resolve(order_id)
-    },
-    async asyncCancelOrder({
-      commit,
-      dispatch,
-      rootState
     }, orderItem) {
-      if (!rootState.user_info) return
+      if (!state.user_info) return
       await request('order_update_status', orderItem)
       await dispatch('initMyOrder')
-      return Promise.resolve()
     },
   }
 

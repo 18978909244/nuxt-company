@@ -1,5 +1,5 @@
 <template>
-  <div class="title-line">
+  <div class="title-line" :style="line?'':'background-image:none'">
     {{main}}
     <em class="c_titleblue">{{sub}}</em>
   </div>
@@ -10,6 +10,10 @@ export default {
     title: {
       type: String,
       default: "标题标题"
+    },
+    line:{
+      type:Boolean,
+      default:true
     }
   },
   computed: {

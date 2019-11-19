@@ -6,7 +6,7 @@
           <div class="link">产品与服务</div>
           <div class="link">帮助</div>
       </div>
-      <div class="right" v-if="is_login">
+      <div class="right" v-if="is_login" @click="$router.push('/orderList')">
         你好, {{user_info.member_name || user_info.member_account}}
       </div>
       <div class="right" v-else>

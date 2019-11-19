@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 const service = axios.create({
   baseURL: '/api',
-  timeout: 10000
+  timeout: 60000
 })
 
 service.interceptors.request.use(
@@ -22,6 +22,7 @@ service.interceptors.response.use(
     const res = response.data
     if (res.code !== 200) {
       Message.error(res.msg)
+      console.log(res)
       return Promise.reject(res.msg)
     }
     return res.data
