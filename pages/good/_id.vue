@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <el-main v-loading="loading"></el-main>
-    <el-main v-if="detail">
+  <section>
+    <section v-loading="loading"></section>
+    <section v-if="detail">
       <div class="header">
         <div class="main">
           <div class="title">
@@ -20,22 +20,34 @@
           </div>
         </div>
       </div>
-      <el-divider />
-      <Title title="产品优势" />
-      <Advantage :list="detail.good_list" />
-    </el-main>
-  </div>
+      <!-- <el-divider /> -->
+      <section class="middle-container">
+        <Title title="产品" sub="优势" v-if="detail.good_list.length > 0" />
+        <Advantage :list="detail.good_list" />
+        <section class="divider"></section>
+        <Title title="办理" sub="流程" v-if="processList.length > 0" />
+        <Process :list="processList" />
+        <section class="divider"></section>
+        <Title title="常见" sub="问题" v-if="detail.problem_list.length > 0" />
+        <Problem :list="detail.problem_list" />
+      </section>
+    </section>
+  </section>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import _ from "lodash";
 import Advantage from "@/components/Advantage";
+import Process from "@/components/Process";
+import Problem from "@/components/Problem";
 import Title from "@/components/Title";
 export default {
   components: {
     Advantage,
-    Title
+    Title,
+    Process,
+    Problem
   },
   data() {
     return {
@@ -58,6 +70,12 @@ export default {
         ? this.detail.kind_list.find(item => item.kind_id === this.kind_id)
             .kind_second_list
         : [];
+    },
+    processList: function() {
+      return (
+        this.detail.processse_type_list[0] &&
+        this.detail.processse_type_list[0].processses
+      );
     }
   },
   created() {
@@ -69,6 +87,8 @@ export default {
     async initData(product_id) {
       this.loading = true;
       this.detail = await this.asyncFetchGood({ product_id });
+      console.log(this.detail);
+      console.log(this.detail.problem_list);
       this.loading = false;
       this.detail.kind_list.forEach(item => {
         this.$set(item, "selected", false);
@@ -91,11 +111,15 @@ export default {
 
 <style lang="less" scoped>
 .header {
+  width: 100%;
+  padding: 50px 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  background: url("../../assets/pro_bg.png") no-repeat;
+  background-position: center center;
   .main {
     display: flex;
-    width: 500px;
+    width: 1080px;
     flex-direction: column;
     .title {
       display: inline-flex;
@@ -124,5 +148,8 @@ export default {
       width: 300px;
     }
   }
+}
+.divider {
+  height: 100px;
 }
 </style>

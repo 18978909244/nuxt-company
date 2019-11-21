@@ -1,6 +1,6 @@
 <template>
   <div class="title-line" :style="line?'':'background-image:none'">
-    {{main}}
+    {{title}}
     <em class="c_titleblue">{{sub}}</em>
   </div>
 </template>
@@ -9,21 +9,15 @@ export default {
   props: {
     title: {
       type: String,
-      default: "标题标题"
+      default: "标题"
     },
     line:{
       type:Boolean,
       default:true
-    }
-  },
-  computed: {
-    main: function() {
-      return this.title.slice(0, 2);
     },
-    sub: function() {
-      return this.title.slice(2, this.title.length);
-    }
-  }
+    sub:String,
+    default:"副标题"
+  },
 };
 </script>
 

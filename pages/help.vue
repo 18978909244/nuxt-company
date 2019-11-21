@@ -4,67 +4,54 @@
       <el-col :span="6">
         <el-menu
           @select="handlerSelect"
-          :default-active="index"
+          :default-active="currentIndex"
           class="el-menu-vertical-demo"
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b"
         >
           <el-menu-item
-            v-for="(item, index) in list"
+            v-for="(item, index) in helpList"
             :key="index"
             :index="index"
             :route="item.route"
           >
             <i class="el-icon-setting"></i>
-            <span slot="title">{{ item.name }}</span>
+            <span slot="title">{{ item.directory_name }}</span>
           </el-menu-item>
         </el-menu>
       </el-col>
       <el-col :span="18">
-        <nuxt-child />
+        <Question :list="helpItem" />
       </el-col>
     </el-row>
   </section>
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import { mapState, mapGetters } from "vuex";
+import Question from "@/components/Question";
 export default {
+  components: {
+    Question
+  },
   computed: {
-    ...mapState(["helpList"])
+    ...mapState(["helpList"]),
+    helpItem: function() {
+      return (
+        this.helpList[this.currentIndex] &&
+        this.helpList[this.currentIndex].content_list
+      );
+    }
   },
   data() {
     return {
-      index: 1,
-      list: [
-        {
-          key: "order",
-          name: "订单",
-          route: "/user/orderlist"
-        },
-        // {
-        //   key:'help',
-        //   name:'帮助',
-        //   route:'/user/help'
-        // },
-        {
-          key: "about",
-          name: "关于我们",
-          route: "/user/aboutus"
-        }
-      ]
+      currentIndex: 0
     };
-  },
-  created() {
-    this.index = this.list.findIndex(item =>
-      this.$route.path.includes(item.key)
-    );
   },
   methods: {
     handlerSelect(e) {
-      this.$router.push(this.list[e].route);
+      this.currentIndex = e;
     }
   }
 };

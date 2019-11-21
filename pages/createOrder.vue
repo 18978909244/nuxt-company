@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <el-main v-loading="loading"></el-main>
-    <div v-if="detail">
+  <section>
+    <section v-loading="loading"></section>
+    <section v-if="detail" class="body-container middle-container">
       <el-steps :active="1" simple>
         <el-step title="提交工单" icon="el-icon-edit"></el-step>
         <el-step title="客户经理对接" icon="el-icon-upload"></el-step>
@@ -9,7 +9,7 @@
       </el-steps>
       <el-divider></el-divider>
 
-      <Title :title="`${detail.name} - ${detail.remark}`" :line="false"></Title>
+      <Title :title="`${detail.name}`" :line="false" :sub="` - ${detail.remark}`"></Title>
       <el-divider></el-divider>
 
       <el-row type="flex" justify="center">
@@ -31,8 +31,8 @@
           </div>
         </el-col>
       </el-row>
-    </div>
-  </div>
+    </section>
+  </section>
 </template>
 
 <script>

@@ -51,10 +51,11 @@
             </el-row>
           </div>
         </el-tooltip>
-        <div class="link" @click="$router.push('/user/help')">帮助</div>
+        <div class="link" @click="$router.push('/help')">帮助</div>
       </div>
       <div class="right" v-if="is_login" @click="$router.push('/user/orderList')">
-        你好, {{ user_info.member_name || user_info.member_account }}
+        你好, {{ user_info.member_name || user_info.member_account }} 
+        <span @click="logout" style="margin-left:20px">退出</span>
       </div>
       <div class="right" v-else>
         <el-button type="primary" @click="$router.push('/login')"
@@ -67,11 +68,14 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapMutations } from "vuex";
 export default {
   computed: {
     ...mapState(["user_info", "categoryList"]),
     ...mapGetters(["getName", "is_login"])
+  },
+  methods:{
+    ...mapMutations(['logout'])
   }
 };
 </script>

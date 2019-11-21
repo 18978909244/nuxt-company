@@ -1,48 +1,59 @@
 <template>
-  <div class="container">
-    <section>
-
-      <section class="body">
-
-      <!-- <el-carousel :interval="4000" height="30px" >
-        <el-carousel-item v-for="(item,index) in informations" :key="index">
-          <h1>{{item.title}}</h1>
+  <section class="middle-container">
+    <div class="version3-public-title">
+      <h3 style="margin-right:30px;">最新资讯</h3>
+      <el-carousel
+        :interval="1000"
+        height="34px"
+        arrow="never"
+        direction="vertical"
+      >
+        <el-carousel-item v-for="(item, index) in informations" :key="index">
+          <h1
+            style="height:34px;line-height:34px"
+            @click="$router.push(`/info/${item.information_id}`)"
+          >
+            {{ item.title }}
+          </h1>
         </el-carousel-item>
-      </el-carousel> -->
-        <div v-for="(item, index) in recommandList" :key="index" class="warp">
-          <div class="version3-public-title">
-            <h3>{{item.service_name}}</h3>
-            <!-- <p>xx</p> -->
-          </div>
-          <div class="good-block">
-            <div class="good-list" v-for="(good, idx) in item.product_list" :key="idx" @click="$router.push(`/good/${good.product_id}`)">
-
-              <el-image :src="good.product_img_small" fit="fit"></el-image>
-              <h3>{{good.name}}</h3>
-            </div>
-          </div>
+      </el-carousel>
+    </div>
+    <el-divider />
+    <el-image :src="require('../assets/us_skill.png')" fit="contain"></el-image>
+    <div v-for="(item, index) in recommandList" :key="index" class="warp">
+      <div class="version3-public-title">
+        <h3>{{ item.service_name }}</h3>
+        <!-- <p>xx</p> -->
+      </div>
+      <div class="good-block">
+        <div
+          class="good-list"
+          v-for="(good, idx) in item.product_list"
+          :key="idx"
+          @click="$router.push(`/good/${good.product_id}`)"
+        >
+          <el-image :src="good.product_img_small" fit="fit"></el-image>
+          <h3>{{ good.name }}</h3>
         </div>
-      </section>
-    </section>
-  </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
-    ...mapState(['informations']),
-    ...mapGetters(["getName","recommandList"]),
+    ...mapState(["informations"]),
+    ...mapGetters(["getName", "recommandList"])
   },
-  created(){
-    console.log(this.$route)
+  created() {
+    console.log(this.$route);
   },
-  methods: {
-  }
+  methods: {}
 };
 </script>
 
@@ -50,7 +61,7 @@ export default {
 .el-carousel__item h3 {
   color: #475669;
   font-size: 14px;
-  
+
   opacity: 0.75;
   line-height: 30px;
   margin: 0;

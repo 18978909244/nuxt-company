@@ -47,12 +47,10 @@
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import _ from "lodash";
 import Advantage from "@/components/Advantage";
-import Title from "@/components/Title";
 import { Message } from "element-ui";
 export default {
   components: {
-    Advantage,
-    Title
+    Advantage
   },
   data() {
     return {

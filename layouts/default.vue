@@ -20,8 +20,7 @@
 import Header from "~/components/Header.vue";
 import Footer from "~/components/Footer.vue";
 import { mapState, mapGetters, mapMutations,mapActions } from "vuex";
-const initList = ['initSetting','asyncFetchCategory','initBanner','initAboutUs','initInformation'
-	]
+const initList = ['initSetting','asyncFetchCategory','initBanner','initAboutUs','initInformation','initHelp']
 export default {
   components:{
     Header,
@@ -62,7 +61,7 @@ export default {
 
 
 <style>
-@import url('//at.alicdn.com/t/font_1517780_opqinurvt2.css');
+@import url('//at.alicdn.com/t/font_1517780_2vrs948a17q.css');
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -112,9 +111,13 @@ html {
 }
 
 .body-container {
-  width: 1080px;
   min-height:600px;
-  padding: 50px 0;
   margin: 0 auto;
+}
+
+.middle-container{
+  width: 1080px;
+  margin: 0 auto;
+  padding: 50px 0
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <el-main>
+    <section class="body-container middle-container">
       <el-row type="flex" justify="center">
         <el-col :span="8">
           <el-form ref="ruleForm" :model="ruleForm" :rules="rules" status-icon class="demo-ruleForm">
@@ -20,7 +20,7 @@
           </el-form>
         </el-col>
       </el-row>
-    </el-main>
+    </section>
 
 </template>
 

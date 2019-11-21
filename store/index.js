@@ -13,6 +13,7 @@ const store = () => new Vuex.Store({
     setting: [],
     banners: [],
     informations: [],
+    helpList:[],
     content: '',
     categoryList: [],
     orderList: [],
@@ -74,6 +75,10 @@ const store = () => new Vuex.Store({
     }
   },
   mutations: {
+    logout(state){
+      state.user_info=null
+      localStorage.removeItem('token')
+    },
     setData(state, obj) {
       Object.keys(obj).forEach(item => {
         state[item] = obj[item]
@@ -125,6 +130,14 @@ const store = () => new Vuex.Store({
       const setting = await request('config_select')
       commit('setData', {
         setting
+      })
+    },
+    async initHelp({
+      commit
+    }){
+      const helpList = await request('helper_directory')
+      commit('setData',{
+        helpList
       })
     },
     async initInformation({
