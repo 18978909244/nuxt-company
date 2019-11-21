@@ -27,6 +27,7 @@
             type="text"
             size="small"
             v-if="scope.row.order_status === 3"
+            @click="pay(scope.row)"
             >支付</el-button
           >
           <el-button
@@ -86,13 +87,11 @@ export default {
       "asyncCancelOrder",
       "asyncPayOrder",
       "asyncDeleteOrder",
-      "initMyOrder"
+      "initMyOrder",
+      "asyncWeixinScan"
     ]),
     handleClick(tab, event) {
       this.index = Number(tab.index);
-    },
-    deleteOrder(item) {
-      this.asyncDeleteOrder(item);
     },
     async cancelOrder(item) {
       await this.asyncCancelOrder({
@@ -100,6 +99,18 @@ export default {
         order_status: 9
       });
       this.initMyOrder();
+    },
+    async pay(item) {
+      let result = await this.asyncWeixinScan({
+        order_no: item.order_no,
+        pay_type: "wechat",
+        method: "web"
+      });
+      const div = document.createElement('div');
+      div.innerHTML = result;
+      document.querySelector("body").appendChild(div);
+      document.forms.alipaysubmit.setAttribute('target', '_blank');
+      document.forms.alipaysubmit.submit();
     },
     handleDetail(item) {
       this.$router.push(`/user/orderDetail?order_id=${item.order_id}`);

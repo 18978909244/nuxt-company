@@ -61,7 +61,7 @@ export default {
     }
   },
   created() {
-    this.id = Number(this.$route.query.id);
+    this.id = Number(this.$route.params.id);
     this.initData(this.id);
   },
   methods: {

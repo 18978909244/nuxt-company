@@ -15,7 +15,7 @@
             <!-- <p>xx</p> -->
           </div>
           <div class="good-block">
-            <div class="good-list" v-for="(good, idx) in item.product_list" :key="idx" @click="$router.push(`/good?id=${good.product_id}`)">
+            <div class="good-list" v-for="(good, idx) in item.product_list" :key="idx" @click="$router.push(`/good/${good.product_id}`)">
 
               <el-image :src="good.product_img_small" fit="fit"></el-image>
               <h3>{{good.name}}</h3>

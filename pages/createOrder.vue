@@ -15,28 +15,10 @@
       <el-row type="flex" justify="center">
         <el-col :span="16">
           <el-form label-width="200px">
-            <el-form-item
-              :label="item.input_name"
-              v-for="(item, index) in input_list"
-              :key="index"
-            >
-              <el-input
-                v-if="item.control.control_code === 'input'"
-                v-model="input_message[item.value_field]"
-                :placeholder="item.remark"
-              ></el-input>
-              <el-input
-                v-if="item.control.control_code === 'textarea'"
-                type="textarea"
-                v-model="input_message[item.value_field]"
-                :placeholder="item.remark"
-              ></el-input>
-              <el-upload
-                v-if="item.control.control_code === 'file'"
-                class="upload-demo"
-                action="/api/api/upload/uploadFile"
-                :limit="1"
-              >
+            <el-form-item :label="item.input_name" v-for="(item, index) in input_list" :key="index">
+              <el-input v-if="item.control.control_code === 'input'" v-model="input_message[item.value_field]" :placeholder="item.remark"></el-input>
+              <el-input v-if="item.control.control_code === 'textarea'" type="textarea" v-model="input_message[item.value_field]" :placeholder="item.remark"></el-input>
+              <el-upload v-if="item.control.control_code === 'file'" class="upload-demo" action="/api/api/upload/uploadFile" :limit="1" :on-success="(response, file, fileList)=>handleUploadSuccess(response, file, fileList,item.value_field)">
                 <el-button size="small" type="primary">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">
                   {{ item.remark }}
@@ -70,7 +52,7 @@ export default {
       input_message: {},
       input_list: [],
       detail: null,
-      loading:false
+      loading: false
     };
   },
   computed: {
@@ -128,7 +110,9 @@ export default {
         }
       });
     },
-
+    handleUploadSuccess(response, file, fileList,key) {
+      this.input_message[key] = response.data.img
+    },
     inputChange(e) {
       const key = e.currentTarget.dataset.name;
       const value = e.detail.value;

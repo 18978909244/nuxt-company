@@ -44,7 +44,7 @@
                     v-for="(product, idx) in item.product_list"
                     :key="idx"
                   >
-                    <el-link @click="$router.push(`/good?id=${product.product_id}`)">{{ product.name }}</el-link>
+                    <el-link @click="$router.push(`/good/${product.product_id}`)">{{ product.name }}</el-link>
                   </el-col>
                 </el-row>
               </el-col>

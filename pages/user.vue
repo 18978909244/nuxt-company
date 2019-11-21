@@ -46,7 +46,7 @@ export default {
     }
   },
    created(){
-     this.index = this.list.findIndex(item=>this.$route.name.includes(item.key))
+     this.index = this.list.findIndex(item=>this.$route.path.includes(item.key))
    },
    methods:{
      handlerSelect(e){

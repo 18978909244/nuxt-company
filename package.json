@@ -5,8 +5,8 @@
   "author": "苏晓光",
   "private": true,
   "scripts": {
-    "serve": "nuxt",
-    "build": "nuxt build",
+    "serve": "PORT=8002 nuxt",
+    "build": "NODE_ENV=production nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
   },

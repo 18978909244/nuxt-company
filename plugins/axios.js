@@ -1,8 +1,10 @@
 /* eslint-disable prefer-const */
 import axios from 'axios'
-import { Message } from 'element-ui'
+import {
+  Message
+} from 'element-ui'
 const service = axios.create({
-  baseURL: '/api',
+  baseURL: process.env.NODE_ENV === 'production' ? '/' : '/api',
   timeout: 60000
 })
 
@@ -39,7 +41,7 @@ service.interceptors.response.use(
   }
 )
 
-const fetch = (url, data,headers) => {
+const fetch = (url, data, headers) => {
   return service({
     url,
     method: 'post',
