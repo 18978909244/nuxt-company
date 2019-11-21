@@ -20,6 +20,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
+    console.log(response)
     if (res.code !== 200) {
       Message.error(res.msg)
       console.log(res)
@@ -38,11 +39,12 @@ service.interceptors.response.use(
   }
 )
 
-const fetch = (url, data) => {
+const fetch = (url, data,headers) => {
   return service({
     url,
     method: 'post',
-    data
+    data,
+    headers
   })
 }
 

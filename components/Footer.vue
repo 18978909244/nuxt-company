@@ -3,9 +3,9 @@
     <div class="container">
       <div class="left">
         <div class="logo">
-          <el-image :src="getName('site_logo')"></el-image>
-          <div class="link">帮助中心</div>
-          <div class="link">关于我们</div>
+          <el-image :src="getName('site_logo')" @click="$router.push('/')"></el-image>
+          <div class="link" @click="$router.push('/user/help')">帮助中心</div>
+          <div class="link" @click="$router.push('/user/aboutus')">关于我们</div>
         </div>
         <div class="copyright">{{getName('site_copyright')}}</div>
       </div>

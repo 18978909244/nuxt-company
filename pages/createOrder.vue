@@ -1,51 +1,55 @@
 <template>
-  <div v-if="detail">
-    <el-steps :active="1" simple>
-      <el-step title="提交工单" icon="el-icon-edit"></el-step>
-      <el-step title="客户经理对接" icon="el-icon-upload"></el-step>
-      <el-step title="确认付款" icon="el-icon-picture"></el-step>
-    </el-steps>
-    <el-divider></el-divider>
+  <div>
+    <el-main v-loading="loading"></el-main>
+    <div v-if="detail">
+      <el-steps :active="1" simple>
+        <el-step title="提交工单" icon="el-icon-edit"></el-step>
+        <el-step title="客户经理对接" icon="el-icon-upload"></el-step>
+        <el-step title="确认付款" icon="el-icon-picture"></el-step>
+      </el-steps>
+      <el-divider></el-divider>
 
-    <Title :title="`${detail.name} - ${detail.remark}`" :line="false"></Title>
-    <el-divider></el-divider>
+      <Title :title="`${detail.name} - ${detail.remark}`" :line="false"></Title>
+      <el-divider></el-divider>
 
-    <el-row type="flex" justify="center">
-      <el-col :span="16">
-        <el-form label-width="200px">
-          <el-form-item
-            :label="item.input_name"
-            v-for="(item, index) in input_list"
-            :key="index"
-          >
-            <el-input
-            v-if="item.control.control_code === 'input'"
-              v-model="input_message[item.value_field]"
-              :placeholder="item.remark"
-            ></el-input>
-            <el-input
-            v-if="item.control.control_code === 'textarea'"
+      <el-row type="flex" justify="center">
+        <el-col :span="16">
+          <el-form label-width="200px">
+            <el-form-item
+              :label="item.input_name"
+              v-for="(item, index) in input_list"
+              :key="index"
+            >
+              <el-input
+                v-if="item.control.control_code === 'input'"
+                v-model="input_message[item.value_field]"
+                :placeholder="item.remark"
+              ></el-input>
+              <el-input
+                v-if="item.control.control_code === 'textarea'"
                 type="textarea"
                 v-model="input_message[item.value_field]"
                 :placeholder="item.remark"
               ></el-input>
               <el-upload
-              v-if="item.control.control_code === 'file'"
-              class="upload-demo"
-              action="/api/api/upload/uploadFile"
-              :limit="1"
-            >
-              <el-button size="small" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">
-                {{item.remark}}
-              </div>
-            </el-upload>
-          </el-form-item>
-        </el-form>
-        <div class="submit">
-          <el-button @click="submit">提交订单</el-button></div>
-      </el-col>
-    </el-row>
+                v-if="item.control.control_code === 'file'"
+                class="upload-demo"
+                action="/api/api/upload/uploadFile"
+                :limit="1"
+              >
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">
+                  {{ item.remark }}
+                </div>
+              </el-upload>
+            </el-form-item>
+          </el-form>
+          <div class="submit">
+            <el-button @click="submit">提交订单</el-button>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -65,7 +69,8 @@ export default {
       id: null,
       input_message: {},
       input_list: [],
-      detail: null
+      detail: null,
+      loading:false
     };
   },
   computed: {
@@ -96,11 +101,13 @@ export default {
         this[item] = option[item];
       });
       if (!option.product_id) return;
+      this.loading = true;
       this.detail = await this.asyncFetchGood({
         product_id: Number(option.product_id)
       });
 
       const { order_input } = await this.asyncGetOrderInput(option);
+      this.loading = false;
 
       this.input_list = order_input;
       this.input_list.forEach(item => {
@@ -144,14 +151,14 @@ export default {
         ...this.input_message
       };
       let order_id = await this.asyncAddOrder(postData);
-      this.$router.push(`/orderDetail?order_id=${order_id}`);
+      this.$router.push(`/user/orderDetail?order_id=${order_id}`);
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.submit{
+.submit {
   width: 100%;
   text-align: center;
 }

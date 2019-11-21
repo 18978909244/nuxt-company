@@ -1,13 +1,14 @@
 <template>
   <div class="container">
     <section>
-      <!-- <el-carousel :interval="4000" type="card" :height="`${bannerHeight}px`">
-        <el-carousel-item v-for="(item,index) in bannerList" :key="index">
-          <el-image ref="image" :src="item.banner_img" @load="imageLoaded" fit="cover" style="width:100%" :style="`height:${bannerHeight}px`"></el-image>
-        </el-carousel-item>
-      </el-carousel> -->
 
       <section class="body">
+
+      <!-- <el-carousel :interval="4000" height="30px" >
+        <el-carousel-item v-for="(item,index) in informations" :key="index">
+          <h1>{{item.title}}</h1>
+        </el-carousel-item>
+      </el-carousel> -->
         <div v-for="(item, index) in recommandList" :key="index" class="warp">
           <div class="version3-public-title">
             <h3>{{item.service_name}}</h3>
@@ -34,6 +35,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(['informations']),
     ...mapGetters(["getName","recommandList"]),
   },
   created(){
@@ -48,17 +50,18 @@ export default {
 .el-carousel__item h3 {
   color: #475669;
   font-size: 14px;
+  
   opacity: 0.75;
-  line-height: 200px;
+  line-height: 30px;
   margin: 0;
 }
 
 .el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
+  /* background-color: #99a9bf; */
 }
 
 .el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
+  /* background-color: #d3dce6; */
 }
 
 .version3-public-title {

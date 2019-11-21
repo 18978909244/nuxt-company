@@ -43,18 +43,18 @@ const store = () => new Vuex.Store({
     getName: state => type => {
       return state.setting.length > 0 ?
         state.setting.find(i => i.config_code === type) ?
-        state.setting.find(i => i.config_code === type).config_value ||
-        state.setting.find(i => i.config_code === type).config_img :
-        '' :
+          state.setting.find(i => i.config_code === type).config_value ||
+          state.setting.find(i => i.config_code === type).config_img :
+          '' :
         ''
     },
     getList: state => type => {
       return state.setting.length > 0 ?
         state.setting.find(i => i.code === type) ?
-        state.setting.filter(
-          item =>
-          item.parent_id === state.setting.find(i => i.code === type).id
-        ) : [] : []
+          state.setting.filter(
+            item =>
+              item.parent_id === state.setting.find(i => i.code === type).id
+          ) : [] : []
     },
     filterOrderList: (state, getters) => order_status_id => {
       const result = state.orderList.filter(item => item.order_status === order_status_id)
@@ -81,27 +81,43 @@ const store = () => new Vuex.Store({
     },
   },
   actions: {
+    async asyncFetchOrder({
+      state,
+      dispatch
+    }, order_id) {
+      if (!state.user_info) return
+      await dispatch('initMyOrder')
+      return state.orderList.find(item => item.order_id === order_id)
+    },
+    async asyncWeixinScan({
+      state
+    }, payLoad) {
+      if (!state.user_info) return
+      const result = await request('order_pay', payLoad, {
+        headers: { "Content-Type": "multipart/form-data" }
+      })
+      return result
+    },
+    async asyncAddOrder({
+      state,
+      commit,
+      dispatch,
+      rootState
+    }, postData) {
+      if (!state.user_info) return
 
-		async asyncAddOrder({
-			state,
-			commit,
-			dispatch,
-			rootState
-		}, postData) {
-			if (!state.user_info) return
-		
-			let {order_id} = await request('order_add', postData)
-			console.log('order_id',order_id)
-			await dispatch('initMyOrder')
-			return Promise.resolve(order_id)
-		},
-    async asyncGetOrderInput({},payLoad){
-      return await request('order_input',payLoad)
+      let { order_id } = await request('order_add', postData)
+      console.log('order_id', order_id)
+      await dispatch('initMyOrder')
+      return Promise.resolve(order_id)
+    },
+    async asyncGetOrderInput({ }, payLoad) {
+      return await request('order_input', payLoad)
     },
     async asyncFetchGood({
       commit
-    },payLoad){
-      return await request('product_find',payLoad)
+    }, payLoad) {
+      return await request('product_find', payLoad)
     },
     async initSetting({
       commit

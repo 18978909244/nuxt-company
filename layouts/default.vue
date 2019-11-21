@@ -9,7 +9,7 @@
         </el-carousel-item>
       </el-carousel>
     </div>
-    <div class="container">
+    <div class="body-container">
       <nuxt />
     </div>
     
@@ -111,8 +111,9 @@ html {
   background-color: #35495e;
 }
 
-.container {
+.body-container {
   width: 1080px;
+  min-height:600px;
   padding: 50px 0;
   margin: 0 auto;
 }
