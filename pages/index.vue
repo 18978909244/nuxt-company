@@ -3,7 +3,7 @@
     <div class="version3-public-title">
       <h3 style="margin-right:30px;">最新资讯</h3>
       <el-carousel
-        :interval="1000"
+        :interval="Number(getName('information_interval'))"
         height="34px"
         arrow="never"
         direction="vertical"
@@ -76,10 +76,10 @@ export default {
 }
 
 .version3-public-title {
-  padding-left: 45px;
+  padding-left: 55px;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAhCAYAAADH97ugAAAAAXNSR0IArs4c6QAAA9RJREFUSA2lV11sFFUUPufO7NJajPylUWM1pjxIQBNpQ+JPH4xLG9a0VZNtjE8aAv4khKrhJ9qtV1obBVF8McgLrw0bEnFpF8qSEIIkKPBAQsBoQ2I1UaOolJ/anZnjmZWZzt69c3er8zLnfN93z3f/Z9eC//ls3Ph5orm5/d4HHu5MXLl8/FZcOYwj6sFT6wY3AdEAATUjgguExQZ7wfrDhwd+Utv/Z6PUumw/EX2iKTiVQHtVoSCvRTkRTeqNu3rkctZ+qNMTQEuJ3NdVzlaBenJ31t3N05U0aFer3LxH1JkeXMsmPWqhypxmKnOAeRlJKW3Xq14XtSgIcVDF5mV06oz3GgCtVIso+fkn14i8gkHdu64rI5e40+53PG1L1CLRHMHuKB6Rp6KYH9e9GZxpZwfrjSaAOFosVJv4RnVNXVd3diUfyFf9BrEPwi20rW1xfF0jcku0h8+HFVfExxHFzmJe/hCnqTmiVHqwl01ScQXKJgBTjZbYadIYjTIZmSTydpsK+JwA3JrPy5smndHoz+vOG0DQaiqAiF9NHBkaNWl8LtYonZZ3ewDv1ChAQsDmGpoyHWs0S84Ij+ZOUxEezf6JsaFzJk3AaY3WpmU7EbwUiLRvhOkkWrVGHDbVGnme8ykrjLcGb4Dh8XH5c1ipRlB1jlLp7Ivk0ePGdgiTixZae3Qa+qDtLvib+vhgLeXL9SQOfHPa11X0urtb3nHTcb/lz/N9uiIBJizoPTY2/GWQB296v201OF6R13ZxgLHhfljRuqFi6thkWy0T7llRa7KrswlK3qEKE9+N6GW4NPlCaJTqlvczuiXsiTZAx0pgv5a68dvbjOtngqAnNIKSu4t706gtchvki3Xv0fzQRVVDQ2seZOxNFQ9zBCobdT2T7eDvTF9IaAIEvGottN7VUACu8xHPRoOW80GkLwR/noXrgb+djQ8KHDyak1dVEb3X9hSbPK/iczlegIeW58TpM04P/z57dI7QRXhxUdOqvSpDBzIWL7Z2m4daS2zGvpxrewSG3vwrR8vqz+X63LBxEFz+PsPhI0Fa9UY8iNmzJ3yc1wjj55YFvDaHimOy6IurHsJnq7AQwBkQdriL/c1wPuSUgC/N2QQm31LguZQqD/wcUY4+xuzXVwJMJND6jA/hVABE34i0tVDITkaxihih6na4zf8ITctGolrh/xhvsBse4zMyUf5HwCxP1688mk3HxofNu3FF62j5iolWRPgDEqIXt0zcqIQj2dPPjSxNzsw2trTc88u+fa+UIpQxpB3tT/AW7+Ad+DsswAO4/dxfaoN/AH/ZJXpVSP+TAAAAAElFTkSuQmCC);
   background-repeat: no-repeat;
-  background-position: 0 0;
+  background-position: 10px 0;
   background-size: 25px 34px;
   height: 34px;
 }

@@ -1,42 +1,22 @@
 <template>
   <div>
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-      <el-tab-pane
-        :label="item.name"
-        :name="item.name"
-        v-for="(item, index) in typeOrderList"
-        :key="index"
-      />
+      <el-tab-pane :label="item.name" :name="item.name" v-for="(item, index) in typeOrderList" :key="index" />
     </el-tabs>
     <el-table :data="getOrderList" style="width: 100%">
       <el-table-column prop="order_no" label="订单号" width="200">
       </el-table-column>
-      <el-table-column prop="name" label="名称" width="150"> </el-table-column>
-      <el-table-column prop="service_name" label="服务" width="150">
-      </el-table-column>
+      <el-table-column prop="name" label="服务" width="250"> </el-table-column>
+   
 
       <el-table-column prop="order_price" label="服务金额（元）" width="150">
       </el-table-column>
 
       <el-table-column fixed="right" label="操作" width="180">
         <template slot-scope="scope" v-if="scope.row.order_status !== 9">
-          <el-button @click="handleDetail(scope.row)" type="text" size="small"
-            >查看</el-button
-          >
-          <el-button
-            type="text"
-            size="small"
-            v-if="scope.row.order_status === 3"
-            @click="pay(scope.row)"
-            >支付</el-button
-          >
-          <el-button
-            type="text"
-            size="small"
-            v-if="scope.row.order_status <= 3"
-            @click="cancelOrder(scope.row)"
-            >取消</el-button
-          >
+          <el-button @click="handleDetail(scope.row)" type="text" size="small">查看</el-button>
+          <el-button type="text" size="small" v-if="scope.row.order_status === 3" @click="pay(scope.row)">支付</el-button>
+          <el-button type="text" size="small" v-if="scope.row.order_status <= 3" @click="cancelOrder(scope.row)">取消</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -67,11 +47,9 @@ export default {
       return this.typeOrderList[this.index].orderList.map(item => {
         return {
           ...item,
-          name: item.product && item.product.name,
-          service_name:
-            item.product &&
-            item.product.product_and_service &&
-            item.product.product_and_service.service_name
+          name: `${item.product && item.product.name} ${
+            item.kind ? '- '+item.kind.kind_name : ""
+          } ${item.kind_second ? '- '+ item.kind_second.kind_second_name : ""}`
         };
       });
     }
@@ -90,6 +68,7 @@ export default {
     ]),
     handleClick(tab, event) {
       this.index = Number(tab.index);
+      this.initMyOrder();
     },
     async cancelOrder(item) {
       await this.asyncCancelOrder({
@@ -104,10 +83,10 @@ export default {
         pay_type: "wechat",
         method: "web"
       });
-      const div = document.createElement('div');
+      const div = document.createElement("div");
       div.innerHTML = result;
       document.querySelector("body").appendChild(div);
-      document.forms.alipaysubmit.setAttribute('target', '_blank');
+      document.forms.alipaysubmit.setAttribute("target", "_blank");
       document.forms.alipaysubmit.submit();
     },
     handleDetail(item) {

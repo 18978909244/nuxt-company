@@ -42,7 +42,7 @@ export default {
         {
           key: "order",
           name: "订单",
-          route: "/user/orderlist"
+          route: "/user/orderList"
         },
         // {
         //   key:'help',

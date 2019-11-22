@@ -17,7 +17,7 @@
           <el-form label-width="200px">
             <el-form-item :label="item.input_name" v-for="(item, index) in input_list" :key="index">
               <el-input v-if="item.control.control_code === 'input'" v-model="input_message[item.value_field]" :placeholder="item.remark"></el-input>
-              <el-input v-if="item.control.control_code === 'textarea'" type="textarea" v-model="input_message[item.value_field]" :placeholder="item.remark"></el-input>
+              <el-input v-if="item.control.control_code === 'text'" type="textarea" v-model="input_message[item.value_field]" :placeholder="item.remark"></el-input>
               <el-upload v-if="item.control.control_code === 'file'" class="upload-demo" action="/api/api/upload/uploadFile" :limit="1" :on-success="(response, file, fileList)=>handleUploadSuccess(response, file, fileList,item.value_field)">
                 <el-button size="small" type="primary">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip">

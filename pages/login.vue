@@ -1,26 +1,26 @@
 <template>
-    <section class="body-container middle-container">
-      <el-row type="flex" justify="center">
-        <el-col :span="8">
-          <el-form ref="ruleForm" :model="ruleForm" :rules="rules" status-icon class="demo-ruleForm">
-            <el-form-item>
-              <h1>
-                登录
-              </h1>
-            </el-form-item>
-            <el-form-item label="账号" prop="member_account">
-              <el-input v-model="ruleForm.member_account" type="text" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-              <el-input v-model="ruleForm.password" type="password" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button @click="submitForm('ruleForm')" type="primary" size="medium" style="width:100%">登录</el-button>
-            </el-form-item>
-          </el-form>
-        </el-col>
-      </el-row>
-    </section>
+  <section class="body-container middle-container">
+    <el-row type="flex" justify="center">
+      <el-col :span="8">
+        <el-form ref="ruleForm" :model="ruleForm" :rules="rules" status-icon class="demo-ruleForm">
+          <el-form-item>
+            <h1>
+              登录
+            </h1>
+          </el-form-item>
+          <el-form-item label="账号" prop="member_account">
+            <el-input v-model="ruleForm.member_account" type="text" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input v-model="ruleForm.password" type="password" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="submitForm('ruleForm')" type="primary" size="medium" style="width:100%">登录</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
+  </section>
 
 </template>
 
@@ -34,8 +34,8 @@ export default {
     return {
       redirect: null,
       ruleForm: {
-        member_account: "18978909244",
-        password: "123456"
+        member_account: "",
+        password: ""
       },
       rules: {
         member_account: [
@@ -61,6 +61,13 @@ export default {
       this.$router.push(this.redirect || "/");
     }
   },
+  watch:{
+    is_login:function(newValue,oldValue){
+      if(newValue===true){ 
+        this.$router.push(this.redirect || "/");
+      }
+    }
+  },
   methods: {
     ...mapActions(["asyncLogin"]),
     submitForm(formName) {
@@ -83,6 +90,6 @@ export default {
 
 <style scoped lang="less">
 h1 {
-    text-align: center;
-  }
+  text-align: center;
+}
 </style>

@@ -15,6 +15,14 @@
           <div class="info">
             {{ detail.detail }}
           </div>
+          <div class="info" v-if="detail.kind_list.length>0">
+            购买服务
+            <el-tag :type="item.selected?'':'info'" v-for="(item,index) in detail.kind_list" :key="index" style="margin-right:10px" @click="selectKind(item)">{{item.kind_name}}</el-tag>
+          </div>
+          <div class="info" v-if="selectedKindList.length>0">
+            选择类型
+            <el-tag :type="item.selected?'':'info'" v-for="(item,index) in selectedKindList" :key="index" style="margin-right:10px" @click="selectSecond(item)">{{item.kind_second_name}}</el-tag>
+          </div>
           <div class="button">
             <el-button type="primary" @click="buy">立即购买</el-button>
           </div>
@@ -53,7 +61,9 @@ export default {
     return {
       id: null,
       detail: null,
-      loading: false
+      loading: false,
+      kind_id: null,
+      second_id: null
     };
   },
   computed: {
@@ -90,11 +100,19 @@ export default {
       console.log(this.detail);
       console.log(this.detail.problem_list);
       this.loading = false;
-      this.detail.kind_list.forEach(item => {
+      this.detail.kind_list.forEach((item, index) => {
         this.$set(item, "selected", false);
+        if (index === 0) {
+          this.kind_id = item.kind_id;
+          this.$set(item, "selected", true);
+        }
         if (item.kind_second_list.length > 0) {
-          item.kind_second_list.forEach(second => {
+          item.kind_second_list.forEach((second, idx) => {
             this.$set(second, "selected", false);
+            if (idx === 0) {
+              this.second_id = item.second_id;
+              this.$set(second, "selected", true);
+            }
           });
         }
       });
@@ -103,7 +121,30 @@ export default {
       if (!this.is_login) {
         this.$router.push("/login?redirect=" + this.$route.fullPath);
       }
-      this.$router.push(`/createOrder?product_id=${this.detail.product_id}`);
+      this.$router.push(
+        `/createOrder?product_id=${this.detail.product_id}&kind_id=${
+          this.kind_id
+        }&second_id=${this.second_id}`
+      );
+    },
+    selectKind(target) {
+      this.detail.kind_list.forEach(item => {
+        item.selected = false;
+        if (item.kind_name === target.kind_name) {
+          item.selected = true;
+          this.kind_id = item.kind_id;
+        }
+      });
+    },
+    selectSecond(target) {
+      console.log(this.selectedKindList, target);
+      this.selectedKindList.forEach(item => {
+        item.selected = false;
+        if (item.kind_second_name === target.kind_second_name) {
+          item.selected = true;
+          this.second_id = item.second_id;
+        }
+      });
     }
   }
 };

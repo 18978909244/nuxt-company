@@ -202,6 +202,25 @@ const store = () => new Vuex.Store({
       dispatch('asyncFetchCategory')
       dispatch('initBanner')
     },
+    async asyncCheckLogin({
+      state,
+      commit,
+      dispatch
+    }) {
+      if(!state.user_info && !localStorage.getItem('token')) return;
+      const {
+        token,
+        user
+      } = await request('member_check_login')
+      localStorage.setItem('token', token);
+      commit('setData', {
+        user_info: user,
+      })
+      dispatch('initMyOrder')
+      dispatch('initSetting')
+      dispatch('asyncFetchCategory')
+      dispatch('initBanner')
+    },
     async asyncSendMessage({
       commit
     }, payLoad) {

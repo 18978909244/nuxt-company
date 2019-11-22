@@ -55,7 +55,7 @@
       </div>
       <div class="right" v-if="is_login" @click="$router.push('/user/orderList')">
         你好, {{ user_info.member_name || user_info.member_account }} 
-        <span @click="logout" style="margin-left:20px">退出</span>
+        <span @click="handleLogout" style="margin-left:20px">退出</span>
       </div>
       <div class="right" v-else>
         <el-button type="primary" @click="$router.push('/login')"
@@ -75,7 +75,11 @@ export default {
     ...mapGetters(["getName", "is_login"])
   },
   methods:{
-    ...mapMutations(['logout'])
+    ...mapMutations(['logout']),
+    handleLogout(){
+      this.logout()
+      this.$router.push('/')
+    }
   }
 };
 </script>

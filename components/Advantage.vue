@@ -36,6 +36,7 @@ export default {
     justify-content: center;
     flex-direction: column;
     text-align: center;
+    padding: 0 20px;
     .el-image{
       width: 60px;
       height: 60px;

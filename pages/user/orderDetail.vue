@@ -1,55 +1,49 @@
 <template>
-  <div class="gd_form" v-if="item">
-    <div class="gd_tit"><span class="icon_tit"></span>服务工单</div>
-    <div>
-      <div class="item">
-        <span class="text">订单号</span>
-        <span class="c_6">{{ item.order_no }}</span>
-      </div>
-      <div class="item">
-        <span class="text">产品名称</span>
-        <span class="c_6">{{
-          item.product &&
-            item.product.product_and_service &&
-            item.product.product_and_service.service_name
-        }}</span>
-      </div>
-      <div class="item">
-        <span class="text">服务名称</span>
-        <span class="c_6">{{ item.product && item.product.name }}</span>
-      </div>
-      <div
-        v-if="input.value"
-        class="item"
-        v-for="(input, key) in input_message"
-        :key="key"
-      >
-        <span class="text">{{ input.key }} </span>
-        <span class="c_6" v-if="input.type !== 'file'">
-          {{ input.value }}
-        </span>
-        <span class="c_6" v-else>
-          <el-link type="primary" :href="input.value" target="_blank"
-            >附件</el-link
-          >
-        </span>
-      </div>
+  <section>
+    <section v-loading="loading"></section>
+    <div class="gd_form" v-if="item">
+      <div class="gd_tit">
+        <span class="icon_tit"></span>服务工单</div>
+      <div>
+        <div class="item">
+          <span class="text">订单号</span>
+          <span class="c_6">{{ item.order_no }}</span>
+        </div>
+        <div class="item">
+          <span class="text">产品名称</span>
+          <span class="c_6">{{ item.product && item.product.name }}
+          </span>
+        </div>
+        <div class="item" v-if="item.kind">
+          <span class="text">服务名称</span>
+          <span class="c_6">{{ item.kind && item.kind.kind_name }}</span>
+        </div>
+        <div class="item" v-if="item.kind">
+          <span class="text">选择类型</span>
+          <span class="c_6">{{ item.kind_second && item.kind_second.kind_second_name }}</span>
+        </div>
+        <div v-if="input.value" class="item" v-for="(input, key) in input_message" :key="key">
+          <span class="text">{{ input.key }} </span>
+          <span class="c_6" v-if="input.type !== 'file'">
+            {{ input.value }}
+          </span>
+          <span class="c_6" v-else>
+            <el-link type="primary" :href="input.value" target="_blank">附件</el-link>
+          </span>
+        </div>
 
-      <div class="item" v-if="[3, 4, 5].includes(item.order_status)">
-        <span class="text">服务金额</span>
-        <span class="c_6">{{ item.order_price }} 元</span>
-      </div>
-      <div class="operate">
-        <el-button type="success">{{ order_status_text }}</el-button>
-        <el-button @click="pay(item)" v-if="item.order_status === 3"
-          >支付</el-button
-        >
-        <el-button @click="cancelOrder(item)" v-if="item.order_status < 3"
-          >取消</el-button
-        >
+        <div class="item" v-if="[3, 4, 5].includes(item.order_status)">
+          <span class="text">服务金额</span>
+          <span class="c_6">{{ item.order_price }} 元</span>
+        </div>
+        <div class="operate">
+          <el-tag style="margin-right:20px;">工单状态:{{ order_status_text }}</el-tag>
+          <el-button @click="pay(item)" v-if="item.order_status === 3">支付</el-button>
+          <el-button @click="cancelOrder(item)" v-if="item.order_status < 3">取消</el-button>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -60,7 +54,8 @@ export default {
   data() {
     return {
       item: null,
-      input_message: []
+      input_message: [],
+      loading:false
     };
   },
   computed: {
@@ -73,7 +68,9 @@ export default {
   },
   async created() {
     console.log(Number(this.$route.query.order_id));
+    this.loading = true
     this.item = await this.asyncFetchOrder(Number(this.$route.query.order_id));
+    this.loading = false
     if (this.item) {
       this.initData({
         product_id: this.item.product_id,
@@ -107,10 +104,10 @@ export default {
         pay_type: "wechat",
         method: "web"
       });
-      const div = document.createElement('div');
+      const div = document.createElement("div");
       div.innerHTML = result;
       document.querySelector("body").appendChild(div);
-      document.forms.alipaysubmit.setAttribute('target', '_blank');
+      document.forms.alipaysubmit.setAttribute("target", "_blank");
       document.forms.alipaysubmit.submit();
     },
     async cancelOrder(item) {
@@ -118,7 +115,7 @@ export default {
         order_no: item.order_no,
         order_status: 9
       });
-      this.$router.push("/orderList");
+      this.$router.push("/user/orderList");
     }
   }
 };
@@ -169,5 +166,6 @@ export default {
   margin-top: 20px;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 </style>
