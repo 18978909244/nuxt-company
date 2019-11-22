@@ -4,8 +4,8 @@
     <section v-if="detail" class="body-container middle-container">
       <el-steps :active="1" simple>
         <el-step title="提交工单" icon="el-icon-edit"></el-step>
-        <el-step title="客户经理对接" icon="el-icon-upload"></el-step>
-        <el-step title="确认付款" icon="el-icon-picture"></el-step>
+        <el-step title="客户经理对接" icon="el-icon-user"></el-step>
+        <el-step title="确认付款" icon="el-icon-money"></el-step>
       </el-steps>
       <el-divider></el-divider>
 
