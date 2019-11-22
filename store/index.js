@@ -86,6 +86,9 @@ const store = () => new Vuex.Store({
     },
   },
   actions: {
+    async nuxtServerInit ({dispatch}, { params, route, req }) {
+      console.log('nuxtServerInit')
+    },
     async asyncFetchOrder({
       state,
       dispatch

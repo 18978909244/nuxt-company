@@ -62,6 +62,12 @@ export default {
       this.$route.path.includes(item.key)
     );
   },
+  watch:{
+    $route:function(to, from){
+      console.log(to.path)
+      this.index = this.list.findIndex(item=>item.route===to.path)
+    }
+  },
   methods: {
     handlerSelect(e) {
       this.$router.push(this.list[e].route);
