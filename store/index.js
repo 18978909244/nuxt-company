@@ -18,6 +18,7 @@ const store = () => new Vuex.Store({
     categoryList: [],
     orderList: [],
     currentCategoryId: 1,
+    aboutus:'',
     orderTypes: [{
       id: 1,
       name: '待确认'
@@ -210,19 +211,24 @@ const store = () => new Vuex.Store({
       commit,
       dispatch
     }) {
-      if(!state.user_info && !localStorage.getItem('token')) return;
-      const {
-        token,
-        user
-      } = await request('member_check_login')
-      localStorage.setItem('token', token);
-      commit('setData', {
-        user_info: user,
-      })
-      dispatch('initMyOrder')
-      dispatch('initSetting')
-      dispatch('asyncFetchCategory')
-      dispatch('initBanner')
+      try{
+        const {
+          token,
+          user
+        } = await request('member_check_login')
+        localStorage.setItem('token', token);
+        commit('setData', {
+          user_info: user,
+        })
+        dispatch('initMyOrder')
+        dispatch('initSetting')
+        dispatch('asyncFetchCategory')
+        dispatch('initBanner')
+        return Promise.resolve()
+      }catch(e){
+        return Promise.reject()
+      }
+      
     },
     async asyncSendMessage({
       commit

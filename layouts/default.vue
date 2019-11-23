@@ -6,7 +6,7 @@
         <el-carousel :interval="Number(getName('swiper_interval'))" type="getName('swiper_type')" :height="`${bannerHeight}px`">
           <el-carousel-item v-for="(item,index) in bannerList" :key="index">
             <!-- <el-image :src="item.banner_img"></el-image> -->
-            <el-image ref="image" :src="item.banner_img" @load="imageLoaded" fit="contain" style="width:100%" :style="`height:${bannerHeight}px`"></el-image>
+            <el-image ref="image" :src="item.banner_img_pc" fit="cover" style="width:100%" :style="`height:${bannerHeight}px`"></el-image>
           </el-carousel-item>
         </el-carousel>
       </section>
@@ -29,17 +29,11 @@ const initList = [
   "initAboutUs",
   "initInformation",
   "initHelp",
-  "asyncCheckLogin"
 ];
 export default {
   components: {
     Header,
     Footer
-  },
-  data() {
-    return {
-      bannerHeight: 0
-    };
   },
   async created() {
     await Promise.all(initList.map(item => this[item]()));
@@ -49,10 +43,13 @@ export default {
     ...mapGetters(["getName", "recommandList"]),
     bannerList: function() {
       return this.banners.filter(item => item.is_enable === 1);
+    },
+    bannerHeight:function(){
+      return Number(this.getName('banner_height'))||300
     }
   },
   mounted() {
-    this.bannerHeight = Math.min(600, 426 * window.innerWidth / 1000);
+    // this.bannerHeight = Math.min(600, 426 * window.innerWidth / 1000);
   },
   methods: {
     ...mapActions(initList),

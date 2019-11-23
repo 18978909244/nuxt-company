@@ -11,7 +11,7 @@
         <el-carousel-item v-for="(item, index) in informations" :key="index">
           <h1
             style="height:34px;line-height:34px"
-            @click="$router.push(`/info/${item.information_id}`)"
+            @click="$router.push(`/info?id=${item.information_id}`)"
           >
             {{ item.title }}
           </h1>
@@ -30,7 +30,7 @@
           class="good-list"
           v-for="(good, idx) in item.product_list"
           :key="idx"
-          @click="$router.push(`/good/${good.product_id}`)"
+          @click="$router.push(`/good?id=${good.product_id}`)"
         >
           <el-image :src="good.product_img_small" fit="fit"></el-image>
           <h3>{{ good.name }}</h3>

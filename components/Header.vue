@@ -32,19 +32,20 @@
                   </el-col>
                   <el-col
                     :span="16"
-                    style="border-right:2px solid #1a2c4c;padding-left:10px"
+                    style="border-right:2px solid #1a2c4c;padding-left:10px;color:#222"
                   >
                     {{ item.service_name }}
                   </el-col>
                 </el-row>
               </el-col>
-              <el-col :span="16">
+              <el-col :span="16" >
                 <el-row type="flex" justify="start">
                   <el-col
                     v-for="(product, idx) in item.product_list"
                     :key="idx"
                   >
-                    <el-link @click="$router.push(`/good/${product.product_id}`)">{{ product.name }}</el-link>
+                    <span @click="$router.push(`/good?id=${product.product_id}`)" 
+                    style="font-weight:bold;cursor:pointer">{{ product.name }}</span>
                   </el-col>
                 </el-row>
               </el-col>
@@ -86,7 +87,7 @@ export default {
 
 <style lang="less" scoped>
 .header {
-  height: 120px;
+  height: 80px;
   background-color: #1a2c4c;
   color: #fff;
   position: relative;

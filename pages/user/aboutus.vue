@@ -1,15 +1,13 @@
 <template>
-  <div v-html="aboutus">
-    
-  </div>
+  <div v-html="aboutus"></div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 export default {
-  computed:{
-    ...mapState(['aboutus'])
+  computed: {
+    ...mapState(["aboutus"])
   }
-}
+};
 </script>
 <style scoped lang="less"></style>

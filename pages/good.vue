@@ -15,13 +15,27 @@
           <div class="info">
             {{ detail.detail }}
           </div>
-          <div class="info" v-if="detail.kind_list.length>0">
+          <div class="info" v-if="detail.kind_list.length > 0">
             购买服务
-            <el-tag :type="item.selected?'':'info'" v-for="(item,index) in detail.kind_list" :key="index" style="margin-right:10px" @click="selectKind(item)">{{item.kind_name}}</el-tag>
+            <el-tag
+              :type="item.selected ? '' : 'info'"
+              v-for="(item, index) in detail.kind_list"
+              :key="index"
+              style="margin-right:10px"
+              @click="selectKind(item)"
+              >{{ item.kind_name }}</el-tag
+            >
           </div>
-          <div class="info" v-if="selectedKindList.length>0">
+          <div class="info" v-if="selectedKindList.length > 0">
             选择类型
-            <el-tag :type="item.selected?'':'info'" v-for="(item,index) in selectedKindList" :key="index" style="margin-right:10px" @click="selectSecond(item)">{{item.kind_second_name}}</el-tag>
+            <el-tag
+              :type="item.selected ? '' : 'info'"
+              v-for="(item, index) in selectedKindList"
+              :key="index"
+              style="margin-right:10px"
+              @click="selectSecond(item)"
+              >{{ item.kind_second_name }}</el-tag
+            >
           </div>
           <div class="button">
             <el-button type="primary" @click="buy">立即购买</el-button>
@@ -78,7 +92,9 @@ export default {
     selectedKindList: function() {
       return this.kind_id
         ? this.detail.kind_list.find(item => item.kind_id === this.kind_id)
-            .kind_second_list
+          ? this.detail.kind_list.find(item => item.kind_id === this.kind_id)
+              .kind_second_list
+          : []
         : [];
     },
     processList: function() {
@@ -88,15 +104,22 @@ export default {
       );
     }
   },
+  watch: {
+    $route: function(to, from) {
+      if (to.fullPath !== from.fullPath) {
+        this.initData();
+      }
+    }
+  },
   created() {
-    this.id = Number(this.$route.params.id);
-    this.initData(this.id);
+    this.initData();
   },
   methods: {
     ...mapActions(["asyncFetchGood"]),
-    async initData(product_id) {
+    async initData() {
+      this.id = Number(this.$route.query.id);
       this.loading = true;
-      this.detail = await this.asyncFetchGood({ product_id });
+      this.detail = await this.asyncFetchGood({ product_id: this.id });
       console.log(this.detail);
       console.log(this.detail.problem_list);
       this.loading = false;
@@ -106,7 +129,7 @@ export default {
           this.kind_id = item.kind_id;
           this.$set(item, "selected", true);
         }
-        if (item.kind_second_list.length > 0) {
+        if (item.kind_second_list && item.kind_second_list.length > 0) {
           item.kind_second_list.forEach((second, idx) => {
             this.$set(second, "selected", false);
             if (idx === 0) {
@@ -122,9 +145,7 @@ export default {
         this.$router.push("/login?redirect=" + this.$route.fullPath);
       }
       this.$router.push(
-        `/createOrder?product_id=${this.detail.product_id}&kind_id=${
-          this.kind_id
-        }&second_id=${this.second_id}`
+        `/createOrder?product_id=${this.detail.product_id}&kind_id=${this.kind_id}&second_id=${this.second_id}`
       );
     },
     selectKind(target) {
@@ -156,7 +177,7 @@ export default {
   padding: 50px 0;
   display: flex;
   justify-content: center;
-  background: url("../../assets/pro_bg.png") no-repeat;
+  background: url("../assets/pro_bg.png") no-repeat;
   background-position: center center;
   .main {
     display: flex;

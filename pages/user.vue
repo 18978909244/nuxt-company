@@ -1,7 +1,7 @@
 <template>
   <section class="body-container middle-container">
     <el-row :gutter="20">
-      <el-col :span="6">
+      <el-col :span="5">
         <el-menu
           @select="handlerSelect"
           :default-active="index"
@@ -13,7 +13,7 @@
           <el-menu-item
             v-for="(item, index) in list"
             :key="index"
-            :index="index"
+            :index="index+''"
             :route="item.route"
           >
             <i class="el-icon-setting"></i>
@@ -21,7 +21,7 @@
           </el-menu-item>
         </el-menu>
       </el-col>
-      <el-col :span="18">
+      <el-col :span="19">
         <nuxt-child />
       </el-col>
     </el-row>
@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      index: 1,
+      index: '0',
       list: [
         {
           key: "order",
@@ -60,12 +60,12 @@ export default {
   created() {
     this.index = this.list.findIndex(item =>
       this.$route.path.includes(item.key)
-    );
+    )+''
   },
   watch:{
     $route:function(to, from){
       console.log(to.path)
-      this.index = this.list.findIndex(item=>item.route===to.path)
+      this.index = this.list.findIndex(item=>item.route===to.path)+''
     }
   },
   methods: {

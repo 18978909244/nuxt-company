@@ -23,7 +23,7 @@ export default {
     }
   },
   created() {
-    this.id = Number(this.$route.params.id);
+    this.id = Number(this.$route.query.id);
   }
 };
 </script>
