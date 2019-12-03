@@ -22,8 +22,8 @@
               :key="index"
               class="row"
             >
-              <el-col :span="8">
-                <el-row type="flex" align="middle" justify="start">
+              <el-col :span="6">
+                <el-row type="flex" align="middle" justify="start" >
                   <el-col :span="8">
                     <el-image
                       :src="item.service_img"
@@ -38,16 +38,17 @@
                   </el-col>
                 </el-row>
               </el-col>
-              <el-col :span="16" >
-                <el-row type="flex" justify="start">
-                  <el-col
+              <el-col :span="18" >
+                <div style="display:flex;flex-wrap:wrap;width:100%;">
+                  <div
                     v-for="(product, idx) in item.product_list"
                     :key="idx"
+                    style="width:33.33%;height:24px;line-height:24px;text-align:center"
                   >
                     <span @click="$router.push(`/good?id=${product.product_id}`)" 
                     style="font-weight:bold;cursor:pointer">{{ product.name }}</span>
-                  </el-col>
-                </el-row>
+                  </div>
+                </div>
               </el-col>
             </el-row>
           </div>
@@ -120,8 +121,8 @@ export default {
 }
 
 .category {
-  width: 500px;
-  padding: 0px 40px;
+  width: 600px;
+  padding: 0px 20px;
   .row {
     border-bottom: 1px dashed #eee;
     margin-top: 10px;

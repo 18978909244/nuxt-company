@@ -44,6 +44,9 @@
       </div>
       <!-- <el-divider /> -->
       <section class="middle-container">
+        <Title title="品牌" v-if="detail.brand_list.length > 0" />
+        <Brand :list="detail.brand_list" />
+        <section class="divider"></section>
         <Title title="产品" sub="优势" v-if="detail.good_list.length > 0" />
         <Advantage :list="detail.good_list" />
         <section class="divider"></section>
@@ -61,6 +64,7 @@
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import _ from "lodash";
 import Advantage from "@/components/Advantage";
+import Brand from "@/components/Brand";
 import Process from "@/components/Process";
 import Problem from "@/components/Problem";
 import Title from "@/components/Title";
@@ -69,7 +73,8 @@ export default {
     Advantage,
     Title,
     Process,
-    Problem
+    Problem,
+    Brand
   },
   data() {
     return {
