@@ -17,25 +17,11 @@
           </div>
           <div class="info" v-if="detail.kind_list.length > 0">
             购买服务
-            <el-tag
-              :type="item.selected ? '' : 'info'"
-              v-for="(item, index) in detail.kind_list"
-              :key="index"
-              style="margin-right:10px"
-              @click="selectKind(item)"
-              >{{ item.kind_name }}</el-tag
-            >
+            <el-tag :type="item.selected ? '' : 'info'" v-for="(item, index) in detail.kind_list" :key="index" style="margin-right:10px" @click="selectKind(item)">{{ item.kind_name }}</el-tag>
           </div>
           <div class="info" v-if="selectedKindList.length > 0">
             选择类型
-            <el-tag
-              :type="item.selected ? '' : 'info'"
-              v-for="(item, index) in selectedKindList"
-              :key="index"
-              style="margin-right:10px"
-              @click="selectSecond(item)"
-              >{{ item.kind_second_name }}</el-tag
-            >
+            <el-tag :type="item.selected ? '' : 'info'" v-for="(item, index) in selectedKindList" :key="index" style="margin-right:10px" @click="selectSecond(item)">{{ item.kind_second_name }}</el-tag>
           </div>
           <div class="button">
             <el-button type="primary" @click="buy">立即购买</el-button>
@@ -44,17 +30,40 @@
       </div>
       <!-- <el-divider /> -->
       <section class="middle-container">
-        <Title title="品牌" v-if="detail.brand_list.length > 0" />
-        <Brand :list="detail.brand_list" />
-        <section class="divider"></section>
-        <Title title="产品" sub="优势" v-if="detail.good_list.length > 0" />
-        <Advantage :list="detail.good_list" />
-        <section class="divider"></section>
-        <Title title="办理" sub="流程" v-if="processList.length > 0" />
-        <Process :list="processList" />
-        <section class="divider"></section>
-        <Title title="常见" sub="问题" v-if="detail.problem_list.length > 0" />
-        <Problem :list="detail.problem_list" />
+        <section v-if="detail.service_list.length > 0">
+          <Title title="包含" sub="服务"/>
+          <Service :list="detail.service_list" />
+          <section class="divider"></section>
+        </section>
+        <section v-if="detail.material_list.length > 0">
+          <Title title="准备" sub="材料"/>
+          <Material :list="detail.material_list" />
+          <section class="divider"></section>
+        </section>
+        <section v-if="detail.brand_list.length > 0">
+          <Title title="品牌" />
+          <Brand :list="detail.brand_list" />
+          <section class="divider"></section>
+        </section>
+        <section v-if="detail.good_list.length > 0">
+          <Title title="产品" sub="优势" />
+          <Advantage :list="detail.good_list" />
+          <section class="divider"></section>
+        </section>
+        <section v-if="processList.length > 0">
+          <Title title="办理" sub="流程" />
+          <Process :list="processList" />
+          <section class="divider"></section>
+        </section>
+        <section v-if="detail.harvest_list.length > 0">
+          <Title title="收获" sub="物品" />
+          <Harvest :list="detail.harvest_list" />
+          <section class="divider"></section>
+        </section>
+        <section v-if="detail.problem_list.length > 0">
+          <Title title="常见" sub="问题" />
+          <Problem :list="detail.problem_list" />
+        </section>
       </section>
     </section>
   </section>
@@ -64,9 +73,12 @@
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import _ from "lodash";
 import Advantage from "@/components/Advantage";
+import Material from "@/components/Material";
 import Brand from "@/components/Brand";
 import Process from "@/components/Process";
 import Problem from "@/components/Problem";
+import Service from "@/components/Service";
+import Harvest from "@/components/Harvest";
 import Title from "@/components/Title";
 export default {
   components: {
@@ -74,7 +86,10 @@ export default {
     Title,
     Process,
     Problem,
-    Brand
+    Brand,
+    Material,
+    Service,
+    Harvest
   },
   data() {
     return {
@@ -150,7 +165,9 @@ export default {
         this.$router.push("/login?redirect=" + this.$route.fullPath);
       }
       this.$router.push(
-        `/createOrder?product_id=${this.detail.product_id}&kind_id=${this.kind_id}&second_id=${this.second_id}`
+        `/createOrder?product_id=${this.detail.product_id}&kind_id=${
+          this.kind_id
+        }&second_id=${this.second_id}`
       );
     },
     selectKind(target) {
