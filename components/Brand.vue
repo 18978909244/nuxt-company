@@ -25,7 +25,7 @@ export default {
 .section {
   padding-top: 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   .item {
     width: 220px;
     min-height: 260px;
@@ -33,7 +33,7 @@ export default {
     border: 1px solid #d7e1ec;
     background-color: #f5f9fd;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     flex-direction: column;
     text-align: center;
     padding: 20px;

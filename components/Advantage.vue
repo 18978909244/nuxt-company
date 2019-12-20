@@ -25,7 +25,7 @@ export default {
 .section{
   padding-top: 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   .item{
     width:220px;
     height: 260px;

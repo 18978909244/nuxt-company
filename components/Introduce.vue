@@ -1,8 +1,9 @@
 <template>
   <div class="section">
     <div class="item" v-for="(item,index) in list" :key="index">
-        <el-image :src="item.harvest_img"></el-image>
-        <div class="title">{{item.remark}}</div>
+        <el-image :src="item.introduce_img"></el-image>
+        <div class="title">{{item.introduce_name}}</div>
+        <div class="sub">{{item.detail}}</div>
     </div>
   </div>
 </template>
@@ -27,18 +28,17 @@ export default {
   justify-content: space-around;
   .item{
     width:220px;
-    height: 260px;
+    min-height: 260px;
     margin:0 10px;
     border: 1px solid #d7e1ec;
     background-color: #f5f9fd;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     text-align: center;
-    padding: 0 20px;
+    padding: 20px;
     .el-image{
       width: 60px;
-      height: 60px;
       margin: 0 auto;
     }
     .title{

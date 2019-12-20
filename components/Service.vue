@@ -26,7 +26,7 @@ export default {
   padding-left: 20px;
   padding-right: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   .item {
     // height: 260px;
     flex:1;

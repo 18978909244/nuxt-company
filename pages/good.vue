@@ -30,6 +30,11 @@
       </div>
       <!-- <el-divider /> -->
       <section class="middle-container">
+        <section v-if="detail.introduce_list.length > 0">
+          <Title title="产品" sub="介绍"/>
+          <Introduce :list="detail.introduce_list" />
+          <section class="divider"></section>
+        </section>
         <section v-if="detail.service_list.length > 0">
           <Title title="包含" sub="服务"/>
           <Service :list="detail.service_list" />
@@ -50,9 +55,9 @@
           <Advantage :list="detail.good_list" />
           <section class="divider"></section>
         </section>
-        <section v-if="processList.length > 0">
+        <section v-if="detail.processse_type_list.length > 0">
           <Title title="办理" sub="流程" />
-          <Process :list="processList" />
+          <Process :list="detail.processse_type_list" />
           <section class="divider"></section>
         </section>
         <section v-if="detail.harvest_list.length > 0">
@@ -79,9 +84,11 @@ import Process from "@/components/Process";
 import Problem from "@/components/Problem";
 import Service from "@/components/Service";
 import Harvest from "@/components/Harvest";
+import Introduce from "@/components/Introduce";
 import Title from "@/components/Title";
 export default {
   components: {
+    Introduce,
     Advantage,
     Title,
     Process,
@@ -117,12 +124,12 @@ export default {
           : []
         : [];
     },
-    processList: function() {
-      return (
-        this.detail.processse_type_list[0] &&
-        this.detail.processse_type_list[0].processses
-      );
-    }
+    // processList: function() {
+    //   return (
+    //     this.detail.processse_type_list[0] &&
+    //     this.detail.processse_type_list[0].processses
+    //   );
+    // }
   },
   watch: {
     $route: function(to, from) {
